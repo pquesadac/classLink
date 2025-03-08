@@ -1,0 +1,20 @@
+export const calendarTheme = {
+    backgroundColor: '#ffffff',
+    calendarBackground: '#ffffff',
+    textSectionTitleColor: '#b6c1cd',
+    selectedDayBackgroundColor: 'rgba(97,139,74,1)',
+    selectedDayTextColor: '#ffffff',
+    todayTextColor: 'rgba(97,139,74,1)',
+    dayTextColor: '#2d4150',
+    textDisabledColor: '#d9e1e8',
+    dotColor: 'rgba(97,139,74,1)',
+    selectedDotColor: '#ffffff',
+    arrowColor: 'rgba(97,139,74,1)',
+    monthTextColor: 'rgba(97,139,74,1)',
+    textDayFontFamily: 'roboto',
+    textMonthFontFamily: 'roboto-bold',
+    textDayHeaderFontFamily: 'roboto',
+    textDayFontSize: 16,
+    textMonthFontSize: 18,
+    textDayHeaderFontSize: 14
+  };

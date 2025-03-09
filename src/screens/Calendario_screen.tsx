@@ -1,75 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { calendarTheme } from '../themes/calendarTheme';
 import { initializeLocale } from '../config/calendarLocale';
 import Schedule from '../components/Schedule';
-
-interface ClassItem {
-  time: string;
-  subject: string;
-  classroom: string;
-}
-
-type WeekDays = 'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes' | 'Sábado' | 'Domingo';
-
-type ScheduleDataType = {
-  [key in WeekDays]?: ClassItem[]; //mapeo dias a arrays de clases
-};
+import { useSchedule } from '../contexts/ScheduleContext';
 
 function CalendarScreen() {
-
-  const [selected, setSelected] = useState('');  // Dia seleccionado
-  const [currentClasses, setCurrentClasses] = useState<ClassItem[]>([]);  // Clases del dia seleccionado
-  const [scheduleData, setScheduleData] = useState<ScheduleDataType>({});  // Datos del horario completo
-  const [loading, setLoading] = useState(true);  // Estado de carga
-  const [error, setError] = useState<string | null>(null);  // Estado de error
+  const { 
+    isLoading, 
+    error, 
+    selectedDate, 
+    setSelectedDate, 
+    selectedDayClasses, 
+    refreshSchedule 
+  } = useSchedule();
 
   useEffect(() => {
     initializeLocale();
-    fetchScheduleData();
   }, []);
 
-  const fetchScheduleData = async () => {
-    try {
-      const response = await fetch('http://10.0.2.2:5000/api/schedule');
-      const data = await response.json();
-      console.log('Datos recibidos:', data);
-      if (data) {
-        setScheduleData(data);
-      }
-      setLoading(false);
-    } catch (err) {
-      console.error('Error detallado:', err);
-      setError('Error al cargar el horario');
-      setLoading(false);
-    }
-  };
-
-  const getDayClasses = (dateString: string): ClassItem[] => {
-    const date = new Date(dateString);
-    const dayNames: Record<string, WeekDays> = {
-      'Monday': 'Lunes',
-      'Tuesday': 'Martes',
-      'Wednesday': 'Miércoles',
-      'Thursday': 'Jueves',
-      'Friday': 'Viernes',
-      'Saturday': 'Sábado',
-      'Sunday': 'Domingo'
-    };
-
-    const day = date.toLocaleDateString('en-US', { weekday: 'long' });
-    const spanishDay = dayNames[day] || 'Lunes';
-    return scheduleData[spanishDay] || [];
-  };
-
   const dayPress = (day: { dateString: string }) => {
-    setSelected(day.dateString);
-    const classes = getDayClasses(day.dateString);
-    setCurrentClasses(classes);
+    setSelectedDate(day.dateString);
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="rgba(97,139,74,1)" />
@@ -98,17 +53,17 @@ function CalendarScreen() {
           onDayPress={dayPress}
           enableSwipeMonths={true}
           markedDates={{
-            [selected]: { selected: true, selectedColor: 'rgba(97,139,74,1)' }
+            [selectedDate]: { selected: true, selectedColor: 'rgba(97,139,74,1)' }
           }}
         />
 
-        {selected && (
+        {selectedDate && (
           <View style={styles.eventContainer}>
             <Text style={styles.selectedDateText}>
-              Horario para: {selected}
+              Horario para: {selectedDate}
             </Text>
-            {currentClasses.length > 0 ? (
-              <Schedule daySchedule={currentClasses} />
+            {selectedDayClasses.length > 0 ? (
+              <Schedule daySchedule={selectedDayClasses} />
             ) : (
               <Text style={styles.noClassesText}>
                 No hay clases programadas para este día

@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-ClassLink es una aplicación móvil desarrollada en React Native que proporciona a los estudiantes información actualizada sobre noticias académicas y horarios de clases. La aplicación permite a los usuarios:
+ClassLink es una aplicación móvil desarrollada en React Native que proporciona a los estudiantes información actualizada sobre noticias relevantes en su localidad y horarios de clases. La aplicación permite a los usuarios:
 
 - Visualizar noticias relevantes
 - Consultar su horario de clases a través de un calendario interactivo

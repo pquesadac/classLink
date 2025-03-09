@@ -1,97 +1,116 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# ClassLink - Aplicación en React Native - Proyecto Desarrollo de Interfaces
 
-# Getting Started
+## Descripción del Proyecto
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+ClassLink es una aplicación móvil desarrollada en React Native que proporciona a los estudiantes información actualizada sobre noticias académicas y horarios de clases. La aplicación permite a los usuarios:
 
-## Step 1: Start Metro
+- Visualizar noticias relevantes
+- Consultar su horario de clases a través de un calendario interactivo
+- Navegar entre diferentes secciones mediante una interfaz intuitiva
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Tecnologías Utilizadas
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Frontend**: React Native, TypeScript
+- **Backend**: Node.js, Express
+- **Base de Datos**: MongoDB
+- **Navegación**: React Navigation
+- **UI Components**: React Native Calendars, React Native Vector Icons
 
-```sh
-# Using npm
-npm start
+## Estructura del Proyecto
 
-# OR using Yarn
-yarn start
+El proyecto está organizado en varios componentes clave:
+
+1. **Pantallas Principales**:
+   - `Home.tsx`: Pantalla de inicio con el logo de la aplicación
+   - `Login.tsx`: Pantalla de inicio de sesión
+   - `Main.tsx`: Contiene la navegación por pestañas
+   - `Inicio.tsx`: Muestra las noticias actuales
+   - `Calendario_screen.tsx`: Interfaz del calendario y horarios
+
+2. **Componentes**:
+   - `Schedule.tsx`: Componente para mostrar horarios diarios de clase
+
+3. **Contexto**:
+   - `ScheduleContext.tsx`: Gestiona los datos del horario a nivel global
+
+4. **Configuración**:
+   - `calendarLocale.ts`: Configuración de localización del calendario
+   - `connect.cjs`: Script para probar la conexión a MongoDB
+   - `servidor.js`: Servidor Express que proporciona la API para los horarios
+
+## Objetivos Conseguidos
+
+### 1. Creación de Componentes Adaptados a la Aplicación
+- ✅ Implementación de componentes reutilizables y modulares
+- ✅ Adaptación de los componentes a los requerimientos específicos de la aplicación
+
+### 2. Diseño del Menú y Gestión entre Pantallas
+- ✅ Creación de un menú de navegación inferior intuitivo y funcional
+- ✅ Implementación de navegación fluida entre pantallas mediante React Navigation
+
+### 3. Uso de Datos Externos
+- ✅ Integración con MongoDB para almacenar y recuperar datos de horarios
+- ✅ Manejo eficiente de estados de carga y errores durante las peticiones
+- ✅ Implementación de función de refresco para actualizar datos
+
+### 4. Creación de Componentes Dinámicos
+- ✅ Los componentes se adaptan a los datos recibidos (FlatList para noticias, Schedule para horarios)
+- ✅ Actualización correcta de la interfaz cuando cambian los datos
+
+### 5. Uso de Contextos Definidos
+- ✅ Implementación del patrón Context para gestionar los datos de horarios
+- ✅ Uso adecuado de proveedores y consumidores de contexto
+
+## Objetivos Parcialmente Conseguidos
+
+### Uso de Datos Externos
+- ⚠️ En la sección de noticias, actualmente se utilizan datos estáticos en lugar de datos obtenidos de una API externa. Sin embargo, la estructura está preparada para implementar esta funcionalidad.
+
+### Autenticación de Usuarios
+- ⚠️ La pantalla de login está implementada a nivel de UI, pero no tiene funcionalidad real de autenticación conectada a un backend.
+
+## Configuración del Proyecto
+
+### Requisitos Previos
+- Node.js
+- MongoDB
+- Emulador Android o dispositivo físico
+
+### Configuración del Servidor
+1. Navega a la carpeta del servidor
+2. Crea un archivo `config.env` con la siguiente estructura:
+   ```
+   ATLAS_URI=mongodb+srv://pabloquesada:MPALZE@cluster0.cvb39.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   PORT=5000
+   ```
+3. Instala las dependencias: `npm install`
+4. Inicia el servidor: `node servidor.js`
+
+### Ejecución de la Aplicación
+1. Navega a la carpeta de la aplicación
+2. Instala las dependencias: `npm install`
+3. Inicia el emulador Android
+4. Ejecuta la aplicación: `npx react-native run-android`
+
+## Estructura de la Base de Datos
+
+La base de datos MongoDB contiene una colección llamada `Horario` con la siguiente estructura:
+
+```javascript
+{
+  "Lunes": [
+    { "time": "8:30 - 10:30", "subject": "Matemáticas", "classroom": "Aula 1.1" },
+    { "time": "11:00 - 13:00", "subject": "Física", "classroom": "Laboratorio 2" }
+  ],
+  "Martes": [
+    { "time": "9:30 - 11:30", "subject": "Programación", "classroom": "Aula de Informática" }
+  ],
+  // etc..
+}
 ```
 
-## Step 2: Build and run your app
+## Notas Adicionales
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- La aplicación está optimizada para dispositivos Android
+- Se ha implementado manejo de errores y estados de carga para mejorar la experiencia de usuario
+- El código utiliza TypeScript para proporcionar tipos estáticos y mejorar la seguridad del código
